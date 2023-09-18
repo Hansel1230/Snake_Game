@@ -2,9 +2,7 @@ import turtle
 import time
 import random
 
-posponer = 0.1
-
-#marcador
+#Scoreboard
 score = 0
 highscore = 0
 
@@ -15,16 +13,7 @@ SnakeTable .bgcolor('Blue')
 SnakeTable.setup(width = 600, height = 600)
 SnakeTable.tracer(0)
 
-#Head
-Head = turtle.Turtle()
-Head.shape('square')
-Head.speed(0)
-Head.color('Pink')
-Head.penup()
-Head.goto(0 , 0)
-Head.direction = 'stop'
-
- #Box
+#Snake table Box
 Box = turtle.Turtle()
 Box.penup()
 Box.pensize(5)
@@ -38,7 +27,16 @@ Box.fd(586)
 Box.rt(90)
 Box.fd(550)
 
-#Comida
+#Head
+Head = turtle.Turtle()
+Head.shape('square')
+Head.speed(0)
+Head.color('Pink')
+Head.penup()
+Head.goto(0 , 0)
+Head.direction = 'stop'
+
+#Food
 Food= turtle.Turtle()
 Food.shape('circle')
 Food.speed(0)
@@ -46,36 +44,33 @@ Food.color('red')
 Food.penup()
 Food.goto(0 , 100)
 
-#Segmentos
+#segments
 segments = []
 
-#Texto
-Texto = turtle.Turtle()
-Texto.speed(0)
-Texto.color('white')
-Texto.penup()
-Texto.hideturtle()
+#Text
+Textturtle = turtle.Turtle()
+Textturtle.speed(0)
+Textturtle.color('white')
+Textturtle.penup()
+Textturtle.hideturtle()
 
-#Funciones
-def arriba():
+#Functions
+def up():
     Head.direction = 'up'
-def abajo():
+def down():
     Head.direction = 'down'
-def izquierda():
+def left():
     Head.direction = 'left'
-def derecha():
+def right():
     Head.direction = 'right'
 
-def  texto():
-    Texto.clear()
-    Texto.goto(0,260)
-    Texto.color('white')
-    Texto.write('Score: {}   High Score:  {}' .format(score,highscore),
+def Text():
+    Textturtle.clear()
+    Textturtle.goto(0,260)
+    Textturtle.color('white')
+    Textturtle.write('Score: {}   High Score:  {}' .format(score,highscore),
                     align ='center', font = ('Courier', 24, 'normal'))
-    #Texto.color('black')
-    #Texto.goto(0,245)
-    #Texto.write('----------------------------------------------------------------------------------------------------------------', align ='center', font = ('Courier', 20, 'normal'))
-
+    
 def mov():
     if Head.direction == 'up':
         y = Head.ycor()
@@ -95,15 +90,15 @@ def mov():
          
 #Keyboard
 SnakeTable.listen()
-SnakeTable.onkeypress(arriba, "Up")
-SnakeTable.onkeypress(abajo, 'Down')
-SnakeTable.onkeypress(izquierda, 'Left')
-SnakeTable.onkeypress(derecha, 'Right')
+SnakeTable.onkeypress(up, "Up")
+SnakeTable.onkeypress(down, 'Down')
+SnakeTable.onkeypress(left, 'Left')
+SnakeTable.onkeypress(right, 'Right')
+
 
 while True:
     SnakeTable.update()
-    texto()
-
+    Text()
 
     #Collision with the edge
     if Head.xcor() > 278 or Head.xcor() < - 280 or Head.ycor() > 240 or Head.ycor() < - 278:
@@ -118,7 +113,7 @@ while True:
         segments.clear()
 
         score = 0
-        texto()
+        Text()
 
     #Food collisions
     if Head.distance(Food) <20:
@@ -142,7 +137,7 @@ while True:
         if score >  highscore:
             highscore = score
             
-        texto()
+        Text()
 
     #Move snake body
     TotalSeg = len(segments)
@@ -172,8 +167,6 @@ while True:
             segments.clear()
 
             score = 0
-            texto()
+            Text()
         
-    time.sleep(posponer)
-    
-    
+    time.sleep(0.1)
